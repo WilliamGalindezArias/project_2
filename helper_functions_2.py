@@ -325,10 +325,12 @@ def fit_polynomial(binary_warped):
     right_fit_meters = np.polyfit(righty*ym_per_pix, rightx*xm_per_pix, 2)
     
     
+    
     left_line.line_base_pos = left_fit[0]*719**2 + left_fit[1]*719 + left_fit[2]
     right_line.line_base_pos = right_fit[0]*719**2 + right_fit[1]*719 + right_fit[2]
     
-    print(left_line.line_base_pos, right_line.line_base_pos)
+    
+    #print(left_line.line_base_pos, right_line.line_base_pos)
     left_line.current_fit = left_fit
     left_line.current_fit_meters = left_fit_meters
     right_line.current_fit = right_fit
@@ -362,7 +364,7 @@ def fit_polynomial(binary_warped):
     #out_img[righty, rightx] = [0, 0, 255]
 
     #return out_img
-    return left_fitx, right_fitx, ploty
+    return left_fitx, right_fitx, ploty, left_line.line_base_pos, right_line.line_base_pos
 
 def fit_poly(img_shape, leftx, lefty, rightx, righty):
      ### TO-DO: Fit a second order polynomial to each with np.polyfit() ###
@@ -380,7 +382,7 @@ def search_around_poly(binary_warped):
     # HYPERPARAMETER
     # Choose the width of the margin around the previous polynomial to search
     # The quiz grader expects 100 here, but feel free to tune on your own!
-    margin = 100
+    margin = 80
 
     # Grab activated pixels
     nonzero = binary_warped.nonzero()
@@ -499,4 +501,13 @@ def measure_curvature_real():
     right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
     
     return left_curverad, right_curverad
+
+#def control_system(current_x_fitted):
+    self.recent_x_fitted  = current_x_fitted
+    #if self.recent_x_fitted > un threshold
+        #return the previous one
+    #else:
+        #newfit(self.recent_x_fitted )
+        
+        
 
